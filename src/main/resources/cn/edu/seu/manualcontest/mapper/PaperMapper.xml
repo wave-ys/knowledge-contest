@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.seu.manualcontest.mapper.PaperMapper">
+    <select id="selectFailedStudent" parameterType="Long" resultType="Long">
+        SELECT mc_paper.user_id
+        FROM mc_paper
+                 INNER JOIN mc_student ms on mc_paper.user_id = ms.id AND ms.status = 'STATUS_SUBMITTED'
+                 INNER JOIN mc_group mg on ms.group_id = mg.id AND mg.user_id = #{value}
+        WHERE mc_paper.score &lt; 25
+    </select>
+    <select id="selectAllFailedStudent" resultType="Long">
+        SELECT mc_paper.user_id
+        FROM mc_paper
+                 INNER JOIN mc_student ms on mc_paper.user_id = ms.id AND ms.status = 'STATUS_SUBMITTED'
+        WHERE mc_paper.score &lt; 25
+    </select>
+</mapper>

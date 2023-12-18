@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.seu.manualcontest.mapper.DetailsMapper">
+
+    <select id="getStudentList" resultType="DetailedStudent">
+        SELECT s.id,
+               s.student_id,
+               s.card_id,
+               s.name,
+               s.status,
+               a.department,
+               g.name as 'group',
+               p.score,
+               s.group_id
+        FROM mc_student as s
+                 left join
+             mc_group as g on g.id = s.group_id
+                 left join
+             mc_paper as p on p.user_id = s.id
+                 left join
+             mc_admin as a on a.id = g.user_id
+    </select>
+
+    <select id="getStudentListByGroup" resultType="DetailedStudent" parameterType="Long">
+        SELECT s.id,
+               s.student_id,
+               s.card_id,
+               s.name,
+               s.status,
+               a.department,
+               g.name as 'group',
+               p.score
+        FROM mc_student as s
+                 left join
+             mc_group as g on g.id = s.group_id
+                 left join
+             mc_paper as p on p.user_id = s.id
+                 left join
+             mc_admin as a on a.id = g.user_id
+        where group_id = #{value}
+    </select>
+
+</mapper>
