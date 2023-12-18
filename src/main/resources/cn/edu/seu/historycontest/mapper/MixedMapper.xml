@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.seu.historycontest.mapper.MixedMapper">
+
+    <select id="getDepartmentStudent" resultType="StudentListResponse" parameterType="Integer">
+        SELECT u.*, p.score
+        FROM hc_user u
+                 LEFT JOIN hc_paper p on p.uid = u.id
+        WHERE u.department = #{value}
+          AND u.role = 'ROLE_STUDENT'
+    </select>
+
+    <select id="getAllDepartmentStudent" resultType="StudentListResponse">
+        SELECT u.*, p.score
+        FROM hc_user u
+                 LEFT JOIN hc_paper p on p.uid = u.id
+        WHERE u.role = 'ROLE_STUDENT'
+    </select>
+
+</mapper>
